@@ -26,6 +26,14 @@ function toggleDone(index) {
   tasks[index].done = !tasks[index].done;
   renderTasks();
   saveTasks();
+
+  // Добавляем зачеркивание для span
+  var taskText = document.querySelectorAll("li span")[index];
+  if (tasks[index].done) {
+    taskText.style.textDecoration = "line-through";
+  } else {
+    taskText.style.textDecoration = "none";
+  }
 }
 
 function deleteAllTasks() {
