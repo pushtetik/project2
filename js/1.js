@@ -12,22 +12,30 @@ function addTask() {
 
     taskInput.value = "";
     renderTasks();
+    saveTasks();
   }
 }
 
 function deleteTask(index) {
   tasks.splice(index, 1);
   renderTasks();
+  saveTasks();
 }
 
 function toggleDone(index) {
   tasks[index].done = !tasks[index].done;
   renderTasks();
+  saveTasks();
 }
 
 function deleteAllTasks() {
   tasks = [];
   renderTasks();
+  saveTasks();
+}
+
+function saveTasks() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
 function renderTasks() {
@@ -46,22 +54,28 @@ function renderTasks() {
     var checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.checked = task.done;
-    checkbox.addEventListener("change", (function(index) {
-      return function() {
-        toggleDone(index);
-      };
-    })(i));
+    checkbox.addEventListener(
+      "change",
+      (function(index) {
+        return function() {
+          toggleDone(index);
+        };
+      })(i)
+    );
 
     var taskText = document.createElement("span");
     taskText.innerHTML = task.text;
 
     var deleteButton = document.createElement("button");
     deleteButton.innerHTML = "Удалить";
-    deleteButton.addEventListener("click", (function(index) {
-      return function() {
-        deleteTask(index);
-      };
-    })(i));
+    deleteButton.addEventListener(
+      "click",
+      (function(index) {
+        return function() {
+          deleteTask(index);
+        };
+      })(i)
+    );
 
     listItem.appendChild(checkbox);
     listItem.appendChild(taskText);
@@ -70,9 +84,10 @@ function renderTasks() {
     taskList.appendChild(listItem);
   }
 }
-window.onload = function() {   
-  if (localStorage.getItem("tasks")) {     
-    tasks = JSON.parse(localStorage.getItem("tasks"));     
-    renderTasks();   
-  } 
+
+window.onload = function() {
+  if (localStorage.getItem("tasks")) {
+    tasks = JSON.parse(localStorage.getItem("tasks"));
+    renderTasks();
+  }
 };
