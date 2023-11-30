@@ -59,9 +59,6 @@ li {
   flex-wrap: wrap;
 }
 
-.task-done {
-  text-decoration: line-through;
-}
 
 .delete-button {
   text-align: right;
